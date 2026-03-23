@@ -75,3 +75,40 @@ document.addEventListener('DOMContentLoaded', () => {
     initDarkMode();
     fetchRepositories();
 });
+// Handle contact form - Send to Google Sheet
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    const statusMsg = document.getElementById('form-status');
+    
+    // Replace with your Google Apps Script deployment URL
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
+    
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('message', message);
+    
+    statusMsg.textContent = '⏳ Sending...';
+    statusMsg.style.color = '#ffd700';
+    
+    fetch(scriptURL, {method: 'POST', body: formData})
+        .then(response => {
+            statusMsg.textContent = '✅ Message received! Thank you!';
+            statusMsg.style.color = '#90EE90';
+            document.getElementById('contact-form').reset();
+            
+            // Clear message after 3 seconds
+            setTimeout(() => {
+                statusMsg.textContent = '';
+            }, 3000);
+        })
+        .catch(error => {
+            statusMsg.textContent = '❌ Error sending message. Please try again.';
+            statusMsg.style.color = '#FF6B6B';
+            console.error('Error:', error);
+        });
+});
