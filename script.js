@@ -43,6 +43,37 @@ async function fetchRepositories() {
     }
 }
 
+// Fetch GitHub stats
+async function fetchGitHubStats() {
+    const username = 'niteshsingh-x';
+    
+    try {
+        const userResponse = await fetch(`https://api.github.com/users/${username}`);
+        const userData = await userResponse.json();
+        
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos`);
+        const reposData = await reposResponse.json();
+        
+        // Calculate total stars
+        const totalStars = reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+        
+        // Update DOM
+        document.getElementById('total-stars').textContent = totalStars;
+        document.getElementById('repo-count').textContent = reposData.length;
+        document.getElementById('followers').textContent = userData.followers;
+        
+    } catch (error) {
+        console.error('Error fetching stats:', error);
+    }
+}
+
+// Call this in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    initDarkMode();
+    fetchRepositories();
+    fetchGitHubStats();
+});
+
 function displayRepositories(repos) {
     const container = document.getElementById('projects-container');
     console.log('Displaying repos:', repos);
@@ -71,4 +102,17 @@ function displayRepositories(repos) {
 document.addEventListener('DOMContentLoaded', () => {
     initDarkMode();
     fetchRepositories();
+});
+
+// Handle contact form
+document.getElementById('contact-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thanks for your message! I\'ll get back to you soon.');
+    this.reset();
+});
+
+// Mobile menu toggle
+document.getElementById('menu-toggle').addEventListener('click', function() {
+    const nav = document.getElementById('mobile-nav');
+    nav.classList.toggle('active');
 });

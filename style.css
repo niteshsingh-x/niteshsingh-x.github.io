@@ -10,6 +10,32 @@ body {
     color: #333;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    transition: background 0.5s ease;
+}
+
+body.dark-mode {
+    background: #1a1a1a;
+    color: #e0e0e0;
+    background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+}
+
+/* Add subtle animation */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+body {
+    animation: gradientBG 15s ease infinite;
+    background-size: 200% 200%;
+}
+
+body.dark-mode {
+    animation: none;
 }
 
 header {
@@ -190,4 +216,216 @@ body.dark-mode footer {
     flex: 1;
     min-width: 150px;
     text-align: center;
+}
+
+.stats {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.stats h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.stat-card h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.stat-card p {
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+}
+
+body.dark-mode .stat-card {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.skills {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.skills h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    justify-items: center;
+}
+
+.skill-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.skill-badge:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+body.dark-mode .skill-badge {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.contact {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 20px;
+}
+
+.contact h2 {
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    width: 100%;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+.submit-btn {
+    background: #667eea;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #764ba2;
+}
+
+body.dark-mode .form-group input,
+body.dark-mode .form-group textarea {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .form-group input:focus,
+body.dark-mode .form-group textarea:focus {
+    border-color: #667eea;
+}
+
+.menu-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.mobile-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.mobile-nav.active {
+    max-height: 200px;
+}
+
+.mobile-nav a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+.mobile-nav a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .header-top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .menu-btn {
+        display: block;
+        margin-top: 10px;
+    }
+    
+    .mobile-nav {
+        display: flex;
+    }
+    
+    .mobile-nav.active {
+        max-height: 200px;
+    }
 }
