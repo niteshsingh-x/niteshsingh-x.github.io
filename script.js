@@ -3,7 +3,7 @@ async function fetchRepositories() {
     const username = 'niteshsingh-x'; 
     
     try {
-        const response = await fetch(`https://api.github.com/users/${niteshsingh-x}/repos`);
+        const response = await fetch(`https://api.github.com/users/${username}/repos`);
         const repos = await response.json();
         
         // Filter out forked repos and sort by stars
