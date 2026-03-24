@@ -198,3 +198,10 @@ body.dark-mode header {
         text-align: center;
     }
 }
+
+/* ========== SKILLS SECTION ========== */
+.skills {
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 20px;
+}
