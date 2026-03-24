@@ -1,3 +1,50 @@
+// Typing animation
+function initTypingEffect() {
+    const texts = [
+        'Full Stack Developer 💻',
+        'GitHub Enthusiast 🐙',
+        'Problem Solver 🧠',
+        'Open Source Lover ❤️',
+        'UI/UX Designer 🎨'
+    ];
+    
+    let textIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typedText = document.getElementById('typed-text');
+    
+    function type() {
+        const currentText = texts[textIndex];
+        
+        if (isDeleting) {
+            typedText.textContent = currentText.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typedText.textContent = currentText.substring(0, charIndex + 1);
+            charIndex++;
+        }
+        
+        if (!isDeleting && charIndex === currentText.length) {
+            setTimeout(() => isDeleting = true, 1500);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            textIndex = (textIndex + 1) % texts.length;
+        }
+        
+        setTimeout(type, isDeleting ? 50 : 100);
+    }
+    
+    type();
+}
+
+// Call in DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+    initDarkMode();
+    initTypingEffect();
+    fetchRepositories();
+    fetchGitHubStats();
+});
+
 // Dark Mode Toggle
 function initDarkMode() {
     const darkModeBtn = document.getElementById('dark-mode-toggle');
