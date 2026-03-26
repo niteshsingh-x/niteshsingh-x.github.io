@@ -3,37 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Portfolio</title>
+    <title>Nitesh Singh - Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   <header>
-    <div class="header-top">
-        <button id="dark-mode-toggle" class="dark-mode-btn">🌙 Dark Mode</button>
-    </div>
-    <div class="header-content">
-        <div class="avatar">NS</div>
-        <h1>Nitesh Singh</h1>
-        <p class="typing-text">I'm a <span id="typed-text"></span><span class="cursor">|</span></p>
-        <p class="header-sub">Turning ideas into reality through code 🚀</p>
-        <div class="header-btns">
-            <a href="https://github.com/niteshsingh-x" target="_blank" class="btn-primary">
-                View GitHub →
-            </a>
-            <a href="#contact" class="btn-secondary">
-                Contact Me
-            </a>
+    <!-- HEADER -->
+    <header>
+        <div class="header-top">
+            <button id="dark-mode-toggle" class="dark-mode-btn">🌙 Dark Mode</button>
         </div>
-        <div class="social-links">
-            <a href="https://github.com/niteshsingh-x" target="_blank">GitHub</a>
-            <span>•</span>
-            <a href="mailto:your-email@gmail.com">Email</a>
-            <span>•</span>
-            <a href="#projects">Projects</a>
+        <div class="header-content">
+            <div class="avatar">NS</div>
+            <h1>Nitesh Singh</h1>
+            <p class="typing-text">I'm a <span id="typed-text"></span><span class="cursor">|</span></p>
+            <p class="header-sub">Turning ideas into reality through code 🚀</p>
+            <div class="header-btns">
+                <a href="https://github.com/niteshsingh-x" target="_blank" class="btn-primary">
+                    View GitHub →
+                </a>
+                <a href="#contact" class="btn-secondary">
+                    Contact Me
+                </a>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/niteshsingh-x" target="_blank">GitHub</a>
+                <span>•</span>
+                <a href="mailto:your-email@gmail.com">Email</a>
+                <span>•</span>
+                <a href="#projects">Projects</a>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
+    <!-- SKILLS SECTION -->
     <section class="skills">
         <h2>Skills & Technologies</h2>
         <div class="skills-grid">
@@ -48,11 +50,13 @@
         </div>
     </section>
 
-    <section class="projects">
+    <!-- PROJECTS SECTION -->
+    <section class="projects" id="projects">
         <h2>My Projects</h2>
         <div id="projects-container"></div>
     </section>
 
+    <!-- STATS SECTION -->
     <section class="stats">
         <h2>GitHub Stats</h2>
         <div class="stats-grid">
@@ -71,23 +75,25 @@
         </div>
     </section>
 
-   <section class="contact" id="contact">
-    <h2>Get In Touch</h2>
-    <form id="contact-form" class="contact-form">
-        <div class="form-group">
-            <input type="text" id="name" placeholder="Your Name" required>
-        </div>
-        <div class="form-group">
-            <input type="email" id="email" placeholder="Your Email" required>
-        </div>
-        <div class="form-group">
-            <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="submit-btn">Send Message</button>
-        <p id="form-status" style="text-align: center; margin-top: 10px; color: white;"></p>
-    </form>
-</section>
+    <!-- CONTACT SECTION -->
+    <section class="contact" id="contact">
+        <h2>Get In Touch</h2>
+        <form id="contact-form" class="contact-form">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+            <p id="form-status"></p>
+        </form>
+    </section>
 
+    <!-- FOOTER -->
     <footer>
         <p>© 2026 My Portfolio | <a href="https://github.com/niteshsingh-x">GitHub</a></p>
     </footer>
