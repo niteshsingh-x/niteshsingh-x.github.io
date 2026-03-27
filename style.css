@@ -193,6 +193,8 @@ header h1 {
     gap: 10px;
     align-items: center;
     margin-top: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .social-links a {
@@ -547,27 +549,6 @@ body.dark-mode footer {
     border-top-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Responsive Footer */
-@media (max-width: 768px) {
-    .footer-content {
-        gap: 12px;
-    }
-
-    .footer-links {
-        gap: 8px;
-        font-size: 0.9em;
-    }
-
-    .resume-link {
-        padding: 6px 16px;
-        font-size: 0.85em;
-    }
-
-    footer p {
-        font-size: 0.85em;
-    }
-}
-
 /* ==================== DARK MODE ==================== */
 body.dark-mode {
     background: linear-gradient(135deg, #0f0f0f, #1a1a2e);
@@ -629,10 +610,6 @@ body.dark-mode .form-group textarea:focus {
     background: rgba(255, 255, 255, 0.12);
 }
 
-body.dark-mode footer {
-    border-top-color: rgba(255, 255, 255, 0.15);
-}
-
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 768px) {
     header {
@@ -681,6 +658,24 @@ body.dark-mode footer {
         padding: 10px 20px;
         font-size: 0.95em;
     }
+
+    .footer-content {
+        gap: 12px;
+    }
+
+    .footer-links {
+        gap: 8px;
+        font-size: 0.9em;
+    }
+
+    .resume-link {
+        padding: 6px 16px;
+        font-size: 0.85em;
+    }
+
+    footer p {
+        font-size: 0.85em;
+    }
 }
 
 @media (max-width: 480px) {
@@ -728,63 +723,4 @@ body.dark-mode footer {
         width: 100%;
         text-align: center;
     }
-}
- /* ==================== RESUME SECTION ==================== */
-.resume-section {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-.resume-container {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 30px;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
-
-.resume-container:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: translateY(-5px);
-}
-
-.resume-container h3 {
-    color: white;
-    font-size: 1.8em;
-    margin-bottom: 10px;
-}
-
-.resume-container p {
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 20px;
-    font-size: 0.95em;
-}
-
-.resume-btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 12px 30px;
-    border-radius: 25px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-}
-
-.resume-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
-}
-
-body.dark-mode .resume-container {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-
-body.dark-mode .resume-container:hover {
-    background: rgba(255, 255, 255, 0.12);
 }
