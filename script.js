@@ -169,7 +169,7 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     const statusMsg = document.getElementById('form-status');
     
     // Replace with your Google Apps Script deployment URL
-    const scriptURL = 'https://script.google.com/macros/d/YOUR_DEPLOYMENT_ID/usercontent';
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
     
     const formData = new FormData();
     formData.append('name', name);
