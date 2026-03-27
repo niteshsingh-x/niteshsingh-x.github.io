@@ -1,3 +1,23 @@
+// Dark Mode Toggle
+function initDarkMode() {
+    const darkModeBtn = document.getElementById('dark-mode-toggle');
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    
+    // Apply saved preference on page load
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        darkModeBtn.textContent = '☀️ Light Mode';
+    }
+    
+    // Toggle dark mode on button click
+    darkModeBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isNowDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isNowDark);
+        darkModeBtn.textContent = isNowDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+    });
+}
+
 // Typing animation
 function initTypingEffect() {
     const texts = [
@@ -37,42 +57,18 @@ function initTypingEffect() {
     type();
 }
 
-// Call in DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-    initDarkMode();
-    initTypingEffect();
-    fetchRepositories();
-    fetchGitHubStats();
-});
-
-// Dark Mode Toggle
-function initDarkMode() {
-    const darkModeBtn = document.getElementById('dark-mode-toggle');
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    
-    // Apply saved preference on page load
-    if (isDarkMode) {
-        document.body.classList.add('dark-mode');
-        darkModeBtn.textContent = '☀️ Light Mode';
-    }
-    
-    // Toggle dark mode on button click
-    darkModeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isNowDark = document.body.classList.contains('dark-mode');
-        localStorage.setItem('darkMode', isNowDark);
-        darkModeBtn.textContent = isNowDark ? '☀️ Light Mode' : '🌙 Dark Mode';
-    });
-}
-
-// Fetching GitHub repositories
+// Fetch GitHub repositories
 async function fetchRepositories() {
-    const username = 'niteshsingh-x'; 
+    const username = 'niteshsingh-x';
     console.log('Fetching repos for:', username);
     
     try {
         const response = await fetch(`https://api.github.com/users/${username}/repos`);
         console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+            throw new Error(`GitHub API error: ${response.status}`);
+        }
         
         const repos = await response.json();
         console.log('Fetched repos:', repos);
@@ -87,6 +83,7 @@ async function fetchRepositories() {
         displayRepositories(ownRepos);
     } catch (error) {
         console.error('Error fetching repos:', error);
+        document.getElementById('projects-container').innerHTML = '<p style="color: white; text-align: center;">Unable to load projects. Please try again later.</p>';
     }
 }
 
@@ -101,6 +98,11 @@ function displayRepositories(repos) {
     
     // Clear existing content before adding new projects
     container.innerHTML = '';
+    
+    if (repos.length === 0) {
+        container.innerHTML = '<p style="color: white; text-align: center; grid-column: 1/-1;">No projects found.</p>';
+        return;
+    }
     
     repos.forEach(repo => {
         const card = document.createElement('div');
@@ -117,90 +119,88 @@ function displayRepositories(repos) {
     });
 }
 
-// Run when page loads
-document.addEventListener('DOMContentLoaded', () => {
-    initDarkMode();
-    fetchRepositories();
-});
+// Fetch GitHub stats
+async function fetchGitHubStats() {
+    const username = 'niteshsingh-x';
+    
+    try {
+        const userResponse = await fetch(`https://api.github.com/users/${username}`);
+        const userData = await userResponse.json();
+        
+        const reposResponse = await fetch(`https://api.github.com/users/${username}/repos`);
+        const reposData = await reposResponse.json();
+        
+        // Calculate total stars
+        const totalStars = reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+        
+        // Update DOM
+        document.getElementById('total-stars').textContent = totalStars;
+        document.getElementById('repo-count').textContent = reposData.length;
+        document.getElementById('followers').textContent = userData.followers;
+        
+        console.log('Stats loaded successfully');
+    } catch (error) {
+        console.error('Error fetching stats:', error);
+    }
+}
+
 // Handle contact form - Send to Google Sheet
-document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing...');
     
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    const statusMsg = document.getElementById('form-status');
+    // Initialize all features
+    initDarkMode();
+    initTypingEffect();
+    fetchRepositories();
+    fetchGitHubStats();
     
-    // Replace with your Google Apps Script deployment URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
-    
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('message', message);
-    
-    statusMsg.textContent = '⏳ Sending...';
-    statusMsg.style.color = '#ffd700';
-    
-    fetch(scriptURL, {method: 'POST', body: formData})
-        .then(response => {
-            statusMsg.textContent = '✅ Message received! Thank you!';
-            statusMsg.style.color = '#90EE90';
-            document.getElementById('contact-form').reset();
+    // Contact form handler
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Clear message after 3 seconds
-            setTimeout(() => {
-                statusMsg.textContent = '';
-            }, 3000);
-        })
-        .catch(error => {
-            statusMsg.textContent = '❌ Error sending message. Please try again.';
-            statusMsg.style.color = '#FF6B6B';
-            console.error('Error:', error);
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const statusMsg = document.getElementById('form-status');
+            
+            //Google Apps Script deployment URL
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
+            
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('message', message);
+            
+            statusMsg.textContent = '⏳ Sending...';
+            statusMsg.style.color = '#ffd700';
+            
+            fetch(scriptURL, {method: 'POST', body: formData})
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        statusMsg.textContent = '✅ Message received! Thank you!';
+                        statusMsg.style.color = '#90EE90';
+                        document.getElementById('contact-form').reset();
+                        
+                        setTimeout(() => {
+                            statusMsg.textContent = '';
+                        }, 3000);
+                    } else {
+                        statusMsg.textContent = '✅ Message sent! (Note: Response may be delayed)';
+                        statusMsg.style.color = '#90EE90';
+                        document.getElementById('contact-form').reset();
+                    }
+                })
+                .catch(error => {
+                    // Even if there's an error, the message was likely sent
+                    statusMsg.textContent = '✅ Message received! Thank you!';
+                    statusMsg.style.color = '#90EE90';
+                    document.getElementById('contact-form').reset();
+                    console.log('Form submitted successfully');
+                });
         });
+    }
 });
-// Handle contact form
-document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    const statusMsg = document.getElementById('form-status');
-    
-    // Replace with your Google Apps Script deployment URL
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
-    
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('message', message);
-    
-    statusMsg.textContent = '⏳ Sending...';
-    statusMsg.style.color = '#ffd700';
-    
-    fetch(scriptURL, {method: 'POST', body: formData})
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            statusMsg.textContent = '✅ Message received! Thank you!';
-            statusMsg.style.color = '#90EE90';
-            document.getElementById('contact-form').reset();
-            
-            setTimeout(() => {
-                statusMsg.textContent = '';
-            }, 3000);
-        } else {
-            statusMsg.textContent = '✅ Message sent! (Note: Response may be delayed)';
-            statusMsg.style.color = '#90EE90';
-            document.getElementById('contact-form').reset();
-        }
-    })
-    .catch(error => {
-        // Even if there's an error, the message was likely sent
-        statusMsg.textContent = '✅ Message received! Thank you!';
-        statusMsg.style.color = '#90EE90';
-        document.getElementById('contact-form').reset();
-        console.log('Form submitted successfully');
-    });
-});
+
