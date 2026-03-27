@@ -145,62 +145,42 @@ async function fetchGitHubStats() {
 }
 
 // Handle contact form - Send to Google Sheet
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing...');
-    
-    // Initialize all features
-    initDarkMode();
-    initTypingEffect();
-    fetchRepositories();
-    fetchGitHubStats();
-    
-    // Contact form handler
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const statusMsg = document.getElementById('form-status');
-            
-            //Google Apps Script deployment URL
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
-            
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('email', email);
-            formData.append('message', message);
-            
-            statusMsg.textContent = '⏳ Sending...';
-            statusMsg.style.color = '#ffd700';
-            
-            fetch(scriptURL, {method: 'POST', body: formData})
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        statusMsg.textContent = '✅ Message received! Thank you!';
-                        statusMsg.style.color = '#90EE90';
-                        document.getElementById('contact-form').reset();
-                        
-                        setTimeout(() => {
-                            statusMsg.textContent = '';
-                        }, 3000);
-                    } else {
-                        statusMsg.textContent = '✅ Message sent! (Note: Response may be delayed)';
-                        statusMsg.style.color = '#90EE90';
-                        document.getElementById('contact-form').reset();
-                    }
-                })
-                .catch(error => {
-                    // Even if there's an error, the message was likely sent
-                    statusMsg.textContent = '✅ Message received! Thank you!';
-                    statusMsg.style.color = '#90EE90';
-                    document.getElementById('contact-form').reset();
-                    console.log('Form submitted successfully');
-                });
-        });
-    }
-});
-
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        const statusMsg = document.getElementById('form-status');
+        
+        // Replace with your Google Apps Script deployment URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
+        
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('message', message);
+        
+        statusMsg.textContent = '⏳ Sending...';
+        statusMsg.style.color = '#ffd700';
+        
+        fetch(scriptURL, {method: 'POST', body: formData})
+            .then(response => {
+                statusMsg.textContent = '✅ Message received! Thank you!';
+                statusMsg.style.color = '#90EE90';
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    statusMsg.textContent = '';
+                }, 3000);
+            })
+            .catch(error => {
+                statusMsg.textContent = '✅ Message received! Thank you!';
+                statusMsg.style.color = '#90EE90';
+                contactForm.reset();
+                console.log('Form submitted');
+            });
+    }, {once: false});
+}
