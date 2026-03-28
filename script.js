@@ -183,6 +183,7 @@ function updatePageLanguage() {
 function setupLanguageDropdown() {
     const langDropdown = document.querySelector('.language-dropdown');
     const langDropdownBtn = document.querySelector('.lang-dropdown-btn');
+    const langDropdownMenu = document.querySelector('.lang-dropdown-menu');
     const langLinks = document.querySelectorAll('.lang-dropdown-menu a');
     const currentLang = getCurrentLanguage();
     
@@ -196,23 +197,24 @@ function setupLanguageDropdown() {
     // Set initial button text
     langDropdownBtn.textContent = langNames[currentLang];
     
-    // Toggle dropdown
-    langDropdownBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        langDropdown.classList.toggle('active');
-    });
-    
-    // Set active language
+    // Mark current language as active
     langLinks.forEach(link => {
         if (link.dataset.lang === currentLang) {
             link.classList.add('active');
         }
     });
     
-    // Handle language clicks
+    // Toggle dropdown on button click
+    langDropdownBtn.onclick = function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        langDropdown.classList.toggle('active');
+        return false;
+    };
+    
+    // Handle each language link click
     langLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.onclick = function(e) {
             e.preventDefault();
             e.stopPropagation();
             
@@ -224,7 +226,7 @@ function setupLanguageDropdown() {
             // Add active to clicked
             this.classList.add('active');
             
-            // Update button
+            // Update button text
             langDropdownBtn.textContent = langNames[selectedLang];
             
             // Close dropdown
@@ -232,15 +234,17 @@ function setupLanguageDropdown() {
             
             // Change language
             setLanguage(selectedLang);
-        });
+            
+            return false;
+        };
     });
     
-    // Close dropdown on outside click
-    document.addEventListener('click', function(e) {
+    // Close dropdown when clicking outside
+    document.onclick = function(e) {
         if (!langDropdown.contains(e.target)) {
             langDropdown.classList.remove('active');
         }
-    });
+    };
 }
 
 // ==================== DARK MODE ====================
