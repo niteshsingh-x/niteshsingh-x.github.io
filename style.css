@@ -218,6 +218,7 @@ header h1 {
 .language-dropdown {
     position: relative;
     display: inline-block;
+    z-index: 1000;
 }
 
 .lang-dropdown-btn {
@@ -258,14 +259,16 @@ header h1 {
     visibility: hidden;
     transform: translateY(-10px);
     transition: all 0.3s ease;
-    z-index: 1000;
+    z-index: 2000;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
 }
 
 .language-dropdown.active .lang-dropdown-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+    pointer-events: auto;
 }
 
 .lang-dropdown-menu a {
@@ -276,6 +279,8 @@ header h1 {
     transition: all 0.2s ease;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 0.95em;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .lang-dropdown-menu a:last-child {
@@ -306,6 +311,22 @@ body.dark-mode .lang-dropdown-btn:hover {
 body.dark-mode .lang-dropdown-menu {
     background: rgba(20, 20, 30, 0.98);
     border-color: rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 768px) {
+    .lang-dropdown-btn {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+
+    .lang-dropdown-menu {
+        min-width: 160px;
+    }
+
+    .lang-dropdown-menu a {
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
 }
 
 /* ==================== SKILLS SECTION ==================== */
