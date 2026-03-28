@@ -127,17 +127,49 @@ function t(key) {
 }
 
 function initLanguageSupport() {
-    const langButtons = document.querySelectorAll('.lang-btn');
+    const langDropdown = document.querySelector('.language-dropdown');
+    const langDropdownBtn = document.querySelector('.lang-dropdown-btn');
+    const langDropdownMenu = document.querySelector('.lang-dropdown-menu');
+    const langLinks = document.querySelectorAll('.lang-dropdown-menu a');
     const currentLang = getCurrentLanguage();
     
-    langButtons.forEach(btn => {
-        if (btn.dataset.lang === currentLang) {
-            btn.classList.add('active');
+    const langNames = {
+        en: '🇬🇧 EN',
+        hi: '🇮🇳 HI',
+        es: '🇪🇸 ES',
+        fr: '🇫🇷 FR'
+    };
+    
+    langDropdownBtn.textContent = langNames[currentLang];
+    
+    langDropdownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle('active');
+    });
+    
+    langLinks.forEach(link => {
+        const lang = link.dataset.lang;
+        
+        if (lang === currentLang) {
+            link.classList.add('active');
         }
         
-        btn.addEventListener('click', () => {
-            setLanguage(btn.dataset.lang);
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            langLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            langDropdownBtn.textContent = langNames[lang];
+            langDropdown.classList.remove('active');
+            setLanguage(lang);
         });
+    });
+    
+    document.addEventListener('click', (e) => {
+        if (!langDropdown.contains(e.target)) {
+            langDropdown.classList.remove('active');
+        }
     });
     
     updatePageLanguage();
@@ -156,19 +188,23 @@ function updatePageLanguage() {
     const contactMeBtn = document.getElementById('contact-me');
     if (contactMeBtn) contactMeBtn.textContent = t('contactMe');
     
-    const skillsTitle = document.querySelector('.skills h2');
+    const skillsTitle = document.getElementById('skills-title');
     if (skillsTitle) skillsTitle.textContent = t('skillsTitle');
     
-    const projectsTitle = document.querySelector('.projects h2');
+    const projectsTitle = document.getElementById('projects-title');
     if (projectsTitle) projectsTitle.textContent = t('projectsTitle');
     
-    const statsTitle = document.querySelector('.stats h2');
+    const statsTitle = document.getElementById('stats-title');
     if (statsTitle) statsTitle.textContent = t('statsTitle');
     
-    const statCards = document.querySelectorAll('.stat-card h3');
-    if (statCards) statCards.textContent = t('stars');
-    if (statCards) statCards.textContent = t('repos');
-    if (statCards) statCards.textContent = t('followers');
+    const statStars = document.getElementById('stat-stars');
+    if (statStars) statStars.textContent = t('stars');
+    
+    const statRepos = document.getElementById('stat-repos');
+    if (statRepos) statRepos.textContent = t('repos');
+    
+    const statFollowers = document.getElementById('stat-followers');
+    if (statFollowers) statFollowers.textContent = t('followers');
     
     const contactTitle = document.querySelector('.contact h2');
     if (contactTitle) contactTitle.textContent = t('contactTitle');
@@ -182,14 +218,14 @@ function updatePageLanguage() {
     const messageInput = document.getElementById('message');
     if (messageInput) messageInput.placeholder = t('contactForm.message');
     
-    const submitBtn = document.querySelector('.submit-btn');
+    const submitBtn = document.getElementById('submit-btn');
     if (submitBtn) submitBtn.textContent = t('contactForm.send');
     
-    const resumeLink = document.querySelector('.resume-link');
+    const resumeLink = document.getElementById('resume-link');
     if (resumeLink) resumeLink.textContent = t('resume');
     
-    const footerP = document.querySelector('footer p');
-    if (footerP) footerP.innerHTML = `${t('copyright')} | <a href="https://github.com/niteshsingh-x">GitHub</a>`;
+    const footerCopyright = document.getElementById('footer-copyright');
+    if (footerCopyright) footerCopyright.innerHTML = `${t('copyright')} | <a href="https://github.com/niteshsingh-x">GitHub</a>`;
 }
 
 // ==================== DARK MODE ====================
