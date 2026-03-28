@@ -724,3 +724,56 @@ body.dark-mode .form-group textarea:focus {
         text-align: center;
     }
 }
+/* ==================== LANGUAGE SELECTOR ==================== */
+.language-selector {
+    display: flex;
+    gap: 8px;
+}
+
+.lang-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85em;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: white;
+}
+
+.lang-btn.active {
+    background: #667eea;
+    border-color: #667eea;
+    color: white;
+}
+
+body.dark-mode .lang-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .lang-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .lang-btn.active {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+@media (max-width: 768px) {
+    .language-selector {
+        gap: 5px;
+    }
+
+    .lang-btn {
+        padding: 5px 10px;
+        font-size: 0.8em;
+    }
+}

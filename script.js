@@ -1,15 +1,207 @@
-// Dark Mode Toggle
+// ==================== LANGUAGE SUPPORT ====================
+const translations = {
+    en: {
+        headerName: "Nitesh Singh",
+        headerSub: "Turning ideas into reality through code 🚀",
+        viewGithub: "View GitHub →",
+        contactMe: "Contact Me",
+        skillsTitle: "Skills & Technologies",
+        projectsTitle: "My Projects",
+        viewOnGithub: "View on GitHub →",
+        statsTitle: "GitHub Stats",
+        stars: "⭐ Stars",
+        repos: "📦 Repos",
+        followers: "👨‍💻 Followers",
+        contactTitle: "Get In Touch",
+        contactForm: {
+            name: "Your Name",
+            email: "Your Email",
+            message: "Your Message",
+            send: "Send Message",
+            sending: "⏳ Sending...",
+            success: "✅ Message received! Thank you!",
+            error: "❌ Error sending message. Please try again."
+        },
+        resume: "📄 Resume",
+        copyright: "©2026 My Portfolio"
+    },
+    
+    hi: {
+        headerName: "नितेश सिंह",
+        headerSub: "कोड के माध्यम से विचारों को वास्तविकता में बदलना 🚀",
+        viewGithub: "GitHub देखें →",
+        contactMe: "मुझसे संपर्क करें",
+        skillsTitle: "कौशल और तकनीकें",
+        projectsTitle: "मेरी परियोजनाएं",
+        viewOnGithub: "GitHub पर देखें →",
+        statsTitle: "GitHub आंकड़े",
+        stars: "⭐ स्टार्स",
+        repos: "📦 रेपो",
+        followers: "👨‍💻 फॉलोअर्स",
+        contactTitle: "संपर्क में रहें",
+        contactForm: {
+            name: "आपका नाम",
+            email: "आपका ईमेल",
+            message: "आपका संदेश",
+            send: "संदेश भेजें",
+            sending: "⏳ भेज रहे हैं...",
+            success: "✅ संदेश प्राप्त हुआ! धन्यवाद!",
+            error: "❌ संदेश भेजने में त्रुटि। कृपया पुनः प्रयास करें।"
+        },
+        resume: "📄 रिज्यूमे",
+        copyright: "©2026 मेरा पोर्टफोलियो"
+    },
+    
+    es: {
+        headerName: "Nitesh Singh",
+        headerSub: "Convirtiendo ideas en realidad a través del código 🚀",
+        viewGithub: "Ver GitHub →",
+        contactMe: "Contáctame",
+        skillsTitle: "Habilidades y Tecnologías",
+        projectsTitle: "Mis Proyectos",
+        viewOnGithub: "Ver en GitHub →",
+        statsTitle: "Estadísticas de GitHub",
+        stars: "⭐ Estrellas",
+        repos: "📦 Repositorios",
+        followers: "👨‍💻 Seguidores",
+        contactTitle: "Ponte en Contacto",
+        contactForm: {
+            name: "Tu Nombre",
+            email: "Tu Email",
+            message: "Tu Mensaje",
+            send: "Enviar Mensaje",
+            sending: "⏳ Enviando...",
+            success: "✅ ¡Mensaje recibido! ¡Gracias!",
+            error: "❌ Error al enviar el mensaje. Por favor, intenta de nuevo."
+        },
+        resume: "📄 Currículum",
+        copyright: "©2026 Mi Portafolio"
+    },
+    
+    fr: {
+        headerName: "Nitesh Singh",
+        headerSub: "Transformer les idées en réalité par le code 🚀",
+        viewGithub: "Voir GitHub →",
+        contactMe: "Me Contacter",
+        skillsTitle: "Compétences et Technologies",
+        projectsTitle: "Mes Projets",
+        viewOnGithub: "Voir sur GitHub →",
+        statsTitle: "Statistiques GitHub",
+        stars: "⭐ Étoiles",
+        repos: "📦 Dépôts",
+        followers: "👨‍💻 Abonnés",
+        contactTitle: "Entrez en Contact",
+        contactForm: {
+            name: "Votre Nom",
+            email: "Votre Email",
+            message: "Votre Message",
+            send: "Envoyer le Message",
+            sending: "⏳ Envoi en cours...",
+            success: "✅ Message reçu! Merci!",
+            error: "❌ Erreur lors de l'envoi du message. Veuillez réessayer."
+        },
+        resume: "📄 CV",
+        copyright: "©2026 Mon Portfolio"
+    }
+};
+
+function getCurrentLanguage() {
+    return localStorage.getItem('language') || 'en';
+}
+
+function setLanguage(lang) {
+    localStorage.setItem('language', lang);
+    location.reload();
+}
+
+function t(key) {
+    const lang = getCurrentLanguage();
+    const keys = key.split('.');
+    let value = translations[lang];
+    
+    for (let k of keys) {
+        value = value[k];
+    }
+    
+    return value || key;
+}
+
+function initLanguageSupport() {
+    const langButtons = document.querySelectorAll('.lang-btn');
+    const currentLang = getCurrentLanguage();
+    
+    langButtons.forEach(btn => {
+        if (btn.dataset.lang === currentLang) {
+            btn.classList.add('active');
+        }
+        
+        btn.addEventListener('click', () => {
+            setLanguage(btn.dataset.lang);
+        });
+    });
+    
+    updatePageLanguage();
+}
+
+function updatePageLanguage() {
+    const headerName = document.getElementById('header-name');
+    if (headerName) headerName.textContent = t('headerName');
+    
+    const headerSub = document.getElementById('header-sub');
+    if (headerSub) headerSub.textContent = t('headerSub');
+    
+    const viewGithubBtn = document.getElementById('view-github');
+    if (viewGithubBtn) viewGithubBtn.textContent = t('viewGithub');
+    
+    const contactMeBtn = document.getElementById('contact-me');
+    if (contactMeBtn) contactMeBtn.textContent = t('contactMe');
+    
+    const skillsTitle = document.querySelector('.skills h2');
+    if (skillsTitle) skillsTitle.textContent = t('skillsTitle');
+    
+    const projectsTitle = document.querySelector('.projects h2');
+    if (projectsTitle) projectsTitle.textContent = t('projectsTitle');
+    
+    const statsTitle = document.querySelector('.stats h2');
+    if (statsTitle) statsTitle.textContent = t('statsTitle');
+    
+    const statCards = document.querySelectorAll('.stat-card h3');
+    if (statCards) statCards.textContent = t('stars');
+    if (statCards) statCards.textContent = t('repos');
+    if (statCards) statCards.textContent = t('followers');
+    
+    const contactTitle = document.querySelector('.contact h2');
+    if (contactTitle) contactTitle.textContent = t('contactTitle');
+    
+    const nameInput = document.getElementById('name');
+    if (nameInput) nameInput.placeholder = t('contactForm.name');
+    
+    const emailInput = document.getElementById('email');
+    if (emailInput) emailInput.placeholder = t('contactForm.email');
+    
+    const messageInput = document.getElementById('message');
+    if (messageInput) messageInput.placeholder = t('contactForm.message');
+    
+    const submitBtn = document.querySelector('.submit-btn');
+    if (submitBtn) submitBtn.textContent = t('contactForm.send');
+    
+    const resumeLink = document.querySelector('.resume-link');
+    if (resumeLink) resumeLink.textContent = t('resume');
+    
+    const footerP = document.querySelector('footer p');
+    if (footerP) footerP.innerHTML = `${t('copyright')} | <a href="https://github.com/niteshsingh-x">GitHub</a>`;
+}
+
+// ==================== DARK MODE ====================
 function initDarkMode() {
     const darkModeBtn = document.getElementById('dark-mode-toggle');
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
     
-    // Apply saved preference on page load
     if (isDarkMode) {
         document.body.classList.add('dark-mode');
         darkModeBtn.textContent = '☀️ Light Mode';
     }
     
-    // Toggle dark mode on button click
     darkModeBtn.addEventListener('click', () => {
         document.body.classList.toggle('dark-mode');
         const isNowDark = document.body.classList.contains('dark-mode');
@@ -18,7 +210,7 @@ function initDarkMode() {
     });
 }
 
-// Typing animation
+// ==================== TYPING ANIMATION ====================
 function initTypingEffect() {
     const texts = [
         'Full Stack Developer 💻',
@@ -57,7 +249,7 @@ function initTypingEffect() {
     type();
 }
 
-// Fetch GitHub repositories
+// ==================== GITHUB REPOSITORIES ====================
 async function fetchRepositories() {
     const username = 'niteshsingh-x';
     console.log('Fetching repos for:', username);
@@ -73,7 +265,6 @@ async function fetchRepositories() {
         const repos = await response.json();
         console.log('Fetched repos:', repos);
         
-        // Filter out forked repos and sort by stars
         const ownRepos = repos
             .filter(repo => !repo.fork)
             .sort((a, b) => b.stargazers_count - a.stargazers_count)
@@ -96,7 +287,6 @@ function displayRepositories(repos) {
         return;
     }
     
-    // Clear existing content before adding new projects
     container.innerHTML = '';
     
     if (repos.length === 0) {
@@ -112,14 +302,14 @@ function displayRepositories(repos) {
             <p>${repo.description || 'No description available'}</p>
             <p><strong>⭐ Stars:</strong> ${repo.stargazers_count}</p>
             <div class="project-links">
-                <a href="${repo.html_url}" target="_blank">View on GitHub →</a>
+                <a href="${repo.html_url}" target="_blank">${t('viewOnGithub')}</a>
             </div>
         `;
         container.appendChild(card);
     });
 }
 
-// Fetch GitHub stats
+// ==================== GITHUB STATS ====================
 async function fetchGitHubStats() {
     const username = 'niteshsingh-x';
     
@@ -130,10 +320,8 @@ async function fetchGitHubStats() {
         const reposResponse = await fetch(`https://api.github.com/users/${username}/repos`);
         const reposData = await reposResponse.json();
         
-        // Calculate total stars
         const totalStars = reposData.reduce((sum, repo) => sum + repo.stargazers_count, 0);
         
-        // Update DOM
         document.getElementById('total-stars').textContent = totalStars;
         document.getElementById('repo-count').textContent = reposData.length;
         document.getElementById('followers').textContent = userData.followers;
@@ -144,43 +332,52 @@ async function fetchGitHubStats() {
     }
 }
 
-// Handle contact form - Send to Google Sheet
-const contactForm = document.getElementById('contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-        const statusMsg = document.getElementById('form-status');
-        
-        // Replace with your Google Apps Script deployment URL
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
-        
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('email', email);
-        formData.append('message', message);
-        
-        statusMsg.textContent = '⏳ Sending...';
-        statusMsg.style.color = '#ffd700';
-        
-        fetch(scriptURL, {method: 'POST', body: formData})
-            .then(response => {
-                statusMsg.textContent = '✅ Message received! Thank you!';
-                statusMsg.style.color = '#90EE90';
-                contactForm.reset();
-                
-                setTimeout(() => {
-                    statusMsg.textContent = '';
-                }, 3000);
-            })
-            .catch(error => {
-                statusMsg.textContent = '✅ Message received! Thank you!';
-                statusMsg.style.color = '#90EE90';
-                contactForm.reset();
-                console.log('Form submitted');
-            });
-    }, {once: false});
-}
+// ==================== CONTACT FORM ====================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing...');
+    
+    initDarkMode();
+    initLanguageSupport();
+    initTypingEffect();
+    fetchRepositories();
+    fetchGitHubStats();
+    
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            const statusMsg = document.getElementById('form-status');
+            
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
+            
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('message', message);
+            
+            statusMsg.textContent = t('contactForm.sending');
+            statusMsg.style.color = '#ffd700';
+            
+            fetch(scriptURL, {method: 'POST', body: formData})
+                .then(response => {
+                    statusMsg.textContent = t('contactForm.success');
+                    statusMsg.style.color = '#90EE90';
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        statusMsg.textContent = '';
+                    }, 3000);
+                })
+                .catch(error => {
+                    statusMsg.textContent = t('contactForm.success');
+                    statusMsg.style.color = '#90EE90';
+                    contactForm.reset();
+                    console.log('Form submitted');
+                });
+        });
+    }
+});
