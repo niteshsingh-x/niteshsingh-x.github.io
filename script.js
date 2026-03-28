@@ -127,11 +127,17 @@ function t(key) {
 }
 
 function initLanguageSupport() {
+    console.log('Initializing language support...');
+    
     const langDropdown = document.querySelector('.language-dropdown');
     const langDropdownBtn = document.querySelector('.lang-dropdown-btn');
     const langDropdownMenu = document.querySelector('.lang-dropdown-menu');
     const langLinks = document.querySelectorAll('.lang-dropdown-menu a');
     const currentLang = getCurrentLanguage();
+    
+    console.log('Current language:', currentLang);
+    console.log('Language dropdown:', langDropdown);
+    console.log('Language links found:', langLinks.length);
     
     const langNames = {
         en: '🇬🇧 EN',
@@ -140,34 +146,61 @@ function initLanguageSupport() {
         fr: '🇫🇷 FR'
     };
     
-    langDropdownBtn.textContent = langNames[currentLang];
+    if (langDropdownBtn) {
+        langDropdownBtn.textContent = langNames[currentLang];
+    }
     
-    langDropdownBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        langDropdown.classList.toggle('active');
-    });
+    // Toggle dropdown on button click
+    if (langDropdownBtn) {
+        langDropdownBtn.addEventListener('click', function(e) {
+            console.log('Language button clicked');
+            e.preventDefault();
+            e.stopPropagation();
+            langDropdown.classList.toggle('active');
+            console.log('Dropdown active:', langDropdown.classList.contains('active'));
+        });
+    }
     
+    // Handle language selection
     langLinks.forEach(link => {
         const lang = link.dataset.lang;
+        console.log('Setting up language link:', lang);
         
+        // Mark current language as active
         if (lang === currentLang) {
             link.classList.add('active');
+            console.log('Marked as active:', lang);
         }
         
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', function(e) {
+            console.log('Language link clicked:', lang);
             e.preventDefault();
             e.stopPropagation();
             
+            // Remove active class from all links
             langLinks.forEach(l => l.classList.remove('active'));
+            
+            // Add active class to clicked link
             link.classList.add('active');
-            langDropdownBtn.textContent = langNames[lang];
+            
+            // Update button text
+            if (langDropdownBtn) {
+                langDropdownBtn.textContent = langNames[lang];
+            }
+            
+            // Close dropdown
             langDropdown.classList.remove('active');
+            
+            console.log('Setting language to:', lang);
+            
+            // Set language and reload
             setLanguage(lang);
         });
     });
     
-    document.addEventListener('click', (e) => {
-        if (!langDropdown.contains(e.target)) {
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (langDropdown && !langDropdown.contains(e.target)) {
             langDropdown.classList.remove('active');
         }
     });
