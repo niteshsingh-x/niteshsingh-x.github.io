@@ -126,88 +126,6 @@ function t(key) {
     return value || key;
 }
 
-function initLanguageSupport() {
-    console.log('Initializing language support...');
-    
-    const langDropdown = document.querySelector('.language-dropdown');
-    const langDropdownBtn = document.querySelector('.lang-dropdown-btn');
-    const langDropdownMenu = document.querySelector('.lang-dropdown-menu');
-    const langLinks = document.querySelectorAll('.lang-dropdown-menu a');
-    const currentLang = getCurrentLanguage();
-    
-    console.log('Current language:', currentLang);
-    console.log('Language dropdown:', langDropdown);
-    console.log('Language links found:', langLinks.length);
-    
-    const langNames = {
-        en: '🇬🇧 EN',
-        hi: '🇮🇳 HI',
-        es: '🇪🇸 ES',
-        fr: '🇫🇷 FR'
-    };
-    
-    if (langDropdownBtn) {
-        langDropdownBtn.textContent = langNames[currentLang];
-    }
-    
-    // Toggle dropdown on button click
-    if (langDropdownBtn) {
-        langDropdownBtn.addEventListener('click', function(e) {
-            console.log('Language button clicked');
-            e.preventDefault();
-            e.stopPropagation();
-            langDropdown.classList.toggle('active');
-            console.log('Dropdown active:', langDropdown.classList.contains('active'));
-        });
-    }
-    
-    // Handle language selection
-    langLinks.forEach(link => {
-        const lang = link.dataset.lang;
-        console.log('Setting up language link:', lang);
-        
-        // Mark current language as active
-        if (lang === currentLang) {
-            link.classList.add('active');
-            console.log('Marked as active:', lang);
-        }
-        
-        link.addEventListener('click', function(e) {
-            console.log('Language link clicked:', lang);
-            e.preventDefault();
-            e.stopPropagation();
-            
-            // Remove active class from all links
-            langLinks.forEach(l => l.classList.remove('active'));
-            
-            // Add active class to clicked link
-            link.classList.add('active');
-            
-            // Update button text
-            if (langDropdownBtn) {
-                langDropdownBtn.textContent = langNames[lang];
-            }
-            
-            // Close dropdown
-            langDropdown.classList.remove('active');
-            
-            console.log('Setting language to:', lang);
-            
-            // Set language and reload
-            setLanguage(lang);
-        });
-    });
-    
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-        if (langDropdown && !langDropdown.contains(e.target)) {
-            langDropdown.classList.remove('active');
-        }
-    });
-    
-    updatePageLanguage();
-}
-
 function updatePageLanguage() {
     const headerName = document.getElementById('header-name');
     if (headerName) headerName.textContent = t('headerName');
@@ -259,6 +177,70 @@ function updatePageLanguage() {
     
     const footerCopyright = document.getElementById('footer-copyright');
     if (footerCopyright) footerCopyright.innerHTML = `${t('copyright')} | <a href="https://github.com/niteshsingh-x">GitHub</a>`;
+}
+
+// ==================== LANGUAGE DROPDOWN ====================
+function setupLanguageDropdown() {
+    const langDropdown = document.querySelector('.language-dropdown');
+    const langDropdownBtn = document.querySelector('.lang-dropdown-btn');
+    const langLinks = document.querySelectorAll('.lang-dropdown-menu a');
+    const currentLang = getCurrentLanguage();
+    
+    const langNames = {
+        en: '🇬🇧 EN',
+        hi: '🇮🇳 HI',
+        es: '🇪🇸 ES',
+        fr: '🇫🇷 FR'
+    };
+    
+    // Set initial button text
+    langDropdownBtn.textContent = langNames[currentLang];
+    
+    // Toggle dropdown
+    langDropdownBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        langDropdown.classList.toggle('active');
+    });
+    
+    // Set active language
+    langLinks.forEach(link => {
+        if (link.dataset.lang === currentLang) {
+            link.classList.add('active');
+        }
+    });
+    
+    // Handle language clicks
+    langLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const selectedLang = this.dataset.lang;
+            
+            // Remove active from all
+            langLinks.forEach(l => l.classList.remove('active'));
+            
+            // Add active to clicked
+            this.classList.add('active');
+            
+            // Update button
+            langDropdownBtn.textContent = langNames[selectedLang];
+            
+            // Close dropdown
+            langDropdown.classList.remove('active');
+            
+            // Change language
+            setLanguage(selectedLang);
+        });
+    });
+    
+    // Close dropdown on outside click
+    document.addEventListener('click', function(e) {
+        if (!langDropdown.contains(e.target)) {
+            langDropdown.classList.remove('active');
+        }
+    });
 }
 
 // ==================== DARK MODE ====================
@@ -321,25 +303,21 @@ function initTypingEffect() {
 // ==================== GITHUB REPOSITORIES ====================
 async function fetchRepositories() {
     const username = 'niteshsingh-x';
-    console.log('Fetching repos for:', username);
     
     try {
         const response = await fetch(`https://api.github.com/users/${username}/repos`);
-        console.log('Response status:', response.status);
         
         if (!response.ok) {
             throw new Error(`GitHub API error: ${response.status}`);
         }
         
         const repos = await response.json();
-        console.log('Fetched repos:', repos);
         
         const ownRepos = repos
             .filter(repo => !repo.fork)
             .sort((a, b) => b.stargazers_count - a.stargazers_count)
             .slice(0, 6);
         
-        console.log('Filtered repos:', ownRepos);
         displayRepositories(ownRepos);
     } catch (error) {
         console.error('Error fetching repos:', error);
@@ -349,10 +327,8 @@ async function fetchRepositories() {
 
 function displayRepositories(repos) {
     const container = document.getElementById('projects-container');
-    console.log('Displaying repos:', repos);
     
     if (!container) {
-        console.error('Projects container not found!');
         return;
     }
     
@@ -394,59 +370,59 @@ async function fetchGitHubStats() {
         document.getElementById('total-stars').textContent = totalStars;
         document.getElementById('repo-count').textContent = reposData.length;
         document.getElementById('followers').textContent = userData.followers;
-        
-        console.log('Stats loaded successfully');
     } catch (error) {
         console.error('Error fetching stats:', error);
     }
 }
 
 // ==================== CONTACT FORM ====================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing...');
+function setupContactForm() {
+    const contactForm = document.getElementById('contact-form');
+    if (!contactForm) return;
     
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        const statusMsg = document.getElementById('form-status');
+        
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
+        
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('message', message);
+        
+        statusMsg.textContent = t('contactForm.sending');
+        statusMsg.style.color = '#ffd700';
+        
+        fetch(scriptURL, {method: 'POST', body: formData})
+            .then(response => {
+                statusMsg.textContent = t('contactForm.success');
+                statusMsg.style.color = '#90EE90';
+                contactForm.reset();
+                
+                setTimeout(() => {
+                    statusMsg.textContent = '';
+                }, 3000);
+            })
+            .catch(error => {
+                statusMsg.textContent = t('contactForm.success');
+                statusMsg.style.color = '#90EE90';
+                contactForm.reset();
+            });
+    });
+}
+
+// ==================== INITIALIZE ALL ====================
+document.addEventListener('DOMContentLoaded', function() {
     initDarkMode();
-    initLanguageSupport();
+    setupLanguageDropdown();
+    updatePageLanguage();
     initTypingEffect();
     fetchRepositories();
     fetchGitHubStats();
-    
-    const contactForm = document.getElementById('contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            const statusMsg = document.getElementById('form-status');
-            
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbyc3lAx8Yr1mon2oUEFA9zl1cUQZEgBzgx1ERdB4BPsrd2L77A6l-xNiggZTqGPilTI/exec';
-            
-            const formData = new FormData();
-            formData.append('name', name);
-            formData.append('email', email);
-            formData.append('message', message);
-            
-            statusMsg.textContent = t('contactForm.sending');
-            statusMsg.style.color = '#ffd700';
-            
-            fetch(scriptURL, {method: 'POST', body: formData})
-                .then(response => {
-                    statusMsg.textContent = t('contactForm.success');
-                    statusMsg.style.color = '#90EE90';
-                    contactForm.reset();
-                    
-                    setTimeout(() => {
-                        statusMsg.textContent = '';
-                    }, 3000);
-                })
-                .catch(error => {
-                    statusMsg.textContent = t('contactForm.success');
-                    statusMsg.style.color = '#90EE90';
-                    contactForm.reset();
-                    console.log('Form submitted');
-                });
-        });
-    }
+    setupContactForm();
 });
