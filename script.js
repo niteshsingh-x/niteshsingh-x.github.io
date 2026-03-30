@@ -182,6 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ==================== FETCH GITHUB AVATAR ====================
+
 async function fetchGitHubAvatar() {
     const username = 'niteshsingh-x';
     
@@ -190,12 +191,9 @@ async function fetchGitHubAvatar() {
         const userData = await response.json();
         
         const avatarImg = document.getElementById('avatar-img');
-        if (avatarImg) {
+        if (avatarImg && userData.avatar_url) {
             avatarImg.src = userData.avatar_url;
-            avatarImg.alt = `${username}'s GitHub Avatar`;
         }
-        
-        console.log('Avatar loaded:', userData.avatar_url);
     } catch (error) {
         console.error('Error fetching avatar:', error);
     }
