@@ -1,252 +1,3 @@
-// ==================== LANGUAGE SUPPORT ====================
-const translations = {
-    en: {
-        headerName: "Nitesh Singh",
-        headerSub: "Turning ideas into reality through code 🚀",
-        viewGithub: "View GitHub →",
-        contactMe: "Contact Me",
-        skillsTitle: "Skills & Technologies",
-        projectsTitle: "My Projects",
-        viewOnGithub: "View on GitHub →",
-        statsTitle: "GitHub Stats",
-        stars: "⭐ Stars",
-        repos: "📦 Repos",
-        followers: "👨‍💻 Followers",
-        contactTitle: "Get In Touch",
-        contactForm: {
-            name: "Your Name",
-            email: "Your Email",
-            message: "Your Message",
-            send: "Send Message",
-            sending: "⏳ Sending...",
-            success: "✅ Message received! Thank you!",
-            error: "❌ Error sending message. Please try again."
-        },
-        resume: "📄 Resume",
-        copyright: "©2026 My Portfolio"
-    },
-    
-    hi: {
-        headerName: "नितेश सिंह",
-        headerSub: "कोड के माध्यम से विचारों को वास्तविकता में बदलना 🚀",
-        viewGithub: "GitHub देखें →",
-        contactMe: "मुझसे संपर्क करें",
-        skillsTitle: "कौशल और तकनीकें",
-        projectsTitle: "मेरी परियोजनाएं",
-        viewOnGithub: "GitHub पर देखें →",
-        statsTitle: "GitHub आंकड़े",
-        stars: "⭐ स्टार्स",
-        repos: "📦 रेपो",
-        followers: "👨‍💻 फॉलोअर्स",
-        contactTitle: "संपर्क में रहें",
-        contactForm: {
-            name: "आपका नाम",
-            email: "आपका ईमेल",
-            message: "आपका संदेश",
-            send: "संदेश भेजें",
-            sending: "⏳ भेज रहे हैं...",
-            success: "✅ संदेश प्राप्त हुआ! धन्यवाद!",
-            error: "❌ संदेश भेजने में त्रुटि। कृपया पुनः प्रयास करें।"
-        },
-        resume: "📄 रिज्यूमे",
-        copyright: "©2026 मेरा पोर्टफोलियो"
-    },
-    
-    es: {
-        headerName: "Nitesh Singh",
-        headerSub: "Convirtiendo ideas en realidad a través del código 🚀",
-        viewGithub: "Ver GitHub →",
-        contactMe: "Contáctame",
-        skillsTitle: "Habilidades y Tecnologías",
-        projectsTitle: "Mis Proyectos",
-        viewOnGithub: "Ver en GitHub →",
-        statsTitle: "Estadísticas de GitHub",
-        stars: "⭐ Estrellas",
-        repos: "📦 Repositorios",
-        followers: "👨‍💻 Seguidores",
-        contactTitle: "Ponte en Contacto",
-        contactForm: {
-            name: "Tu Nombre",
-            email: "Tu Email",
-            message: "Tu Mensaje",
-            send: "Enviar Mensaje",
-            sending: "⏳ Enviando...",
-            success: "✅ ¡Mensaje recibido! ¡Gracias!",
-            error: "❌ Error al enviar el mensaje. Por favor, intenta de nuevo."
-        },
-        resume: "📄 Currículum",
-        copyright: "©2026 Mi Portafolio"
-    },
-    
-    fr: {
-        headerName: "Nitesh Singh",
-        headerSub: "Transformer les idées en réalité par le code 🚀",
-        viewGithub: "Voir GitHub →",
-        contactMe: "Me Contacter",
-        skillsTitle: "Compétences et Technologies",
-        projectsTitle: "Mes Projets",
-        viewOnGithub: "Voir sur GitHub →",
-        statsTitle: "Statistiques GitHub",
-        stars: "⭐ Étoiles",
-        repos: "📦 Dépôts",
-        followers: "👨‍💻 Abonnés",
-        contactTitle: "Entrez en Contact",
-        contactForm: {
-            name: "Votre Nom",
-            email: "Votre Email",
-            message: "Votre Message",
-            send: "Envoyer le Message",
-            sending: "⏳ Envoi en cours...",
-            success: "✅ Message reçu! Merci!",
-            error: "❌ Erreur lors de l'envoi du message. Veuillez réessayer."
-        },
-        resume: "📄 CV",
-        copyright: "©2026 Mon Portfolio"
-    }
-};
-
-function getCurrentLanguage() {
-    return localStorage.getItem('language') || 'en';
-}
-
-function setLanguage(lang) {
-    localStorage.setItem('language', lang);
-    location.reload();
-}
-
-function t(key) {
-    const lang = getCurrentLanguage();
-    const keys = key.split('.');
-    let value = translations[lang];
-    
-    for (let k of keys) {
-        value = value[k];
-    }
-    
-    return value || key;
-}
-
-function updatePageLanguage() {
-    const headerName = document.getElementById('header-name');
-    if (headerName) headerName.textContent = t('headerName');
-    
-    const headerSub = document.getElementById('header-sub');
-    if (headerSub) headerSub.textContent = t('headerSub');
-    
-    const viewGithubBtn = document.getElementById('view-github');
-    if (viewGithubBtn) viewGithubBtn.textContent = t('viewGithub');
-    
-    const contactMeBtn = document.getElementById('contact-me');
-    if (contactMeBtn) contactMeBtn.textContent = t('contactMe');
-    
-    const skillsTitle = document.getElementById('skills-title');
-    if (skillsTitle) skillsTitle.textContent = t('skillsTitle');
-    
-    const projectsTitle = document.getElementById('projects-title');
-    if (projectsTitle) projectsTitle.textContent = t('projectsTitle');
-    
-    const statsTitle = document.getElementById('stats-title');
-    if (statsTitle) statsTitle.textContent = t('statsTitle');
-    
-    const statStars = document.getElementById('stat-stars');
-    if (statStars) statStars.textContent = t('stars');
-    
-    const statRepos = document.getElementById('stat-repos');
-    if (statRepos) statRepos.textContent = t('repos');
-    
-    const statFollowers = document.getElementById('stat-followers');
-    if (statFollowers) statFollowers.textContent = t('followers');
-    
-    const contactTitle = document.querySelector('.contact h2');
-    if (contactTitle) contactTitle.textContent = t('contactTitle');
-    
-    const nameInput = document.getElementById('name');
-    if (nameInput) nameInput.placeholder = t('contactForm.name');
-    
-    const emailInput = document.getElementById('email');
-    if (emailInput) emailInput.placeholder = t('contactForm.email');
-    
-    const messageInput = document.getElementById('message');
-    if (messageInput) messageInput.placeholder = t('contactForm.message');
-    
-    const submitBtn = document.getElementById('submit-btn');
-    if (submitBtn) submitBtn.textContent = t('contactForm.send');
-    
-    const resumeLink = document.getElementById('resume-link');
-    if (resumeLink) resumeLink.textContent = t('resume');
-    
-    const footerCopyright = document.getElementById('footer-copyright');
-    if (footerCopyright) footerCopyright.innerHTML = `${t('copyright')} | <a href="https://github.com/niteshsingh-x">GitHub</a>`;
-}
-
-// ==================== LANGUAGE DROPDOWN ====================
-function setupLanguageDropdown() {
-    const langDropdown = document.querySelector('.language-dropdown');
-    const langDropdownBtn = document.querySelector('.lang-dropdown-btn');
-    const langDropdownMenu = document.querySelector('.lang-dropdown-menu');
-    const langLinks = document.querySelectorAll('.lang-dropdown-menu a');
-    const currentLang = getCurrentLanguage();
-    
-    const langNames = {
-        en: '🇬🇧 EN',
-        hi: '🇮🇳 HI',
-        es: '🇪🇸 ES',
-        fr: '🇫🇷 FR'
-    };
-    
-    // Set initial button text
-    langDropdownBtn.textContent = langNames[currentLang];
-    
-    // Mark current language as active
-    langLinks.forEach(link => {
-        if (link.dataset.lang === currentLang) {
-            link.classList.add('active');
-        }
-    });
-    
-    // Toggle dropdown on button click
-    langDropdownBtn.onclick = function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        langDropdown.classList.toggle('active');
-        return false;
-    };
-    
-    // Handle each language link click
-    langLinks.forEach(link => {
-        link.onclick = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            const selectedLang = this.dataset.lang;
-            
-            // Remove active from all
-            langLinks.forEach(l => l.classList.remove('active'));
-            
-            // Add active to clicked
-            this.classList.add('active');
-            
-            // Update button text
-            langDropdownBtn.textContent = langNames[selectedLang];
-            
-            // Close dropdown
-            langDropdown.classList.remove('active');
-            
-            // Change language
-            setLanguage(selectedLang);
-            
-            return false;
-        };
-    });
-    
-    // Close dropdown when clicking outside
-    document.onclick = function(e) {
-        if (!langDropdown.contains(e.target)) {
-            langDropdown.classList.remove('active');
-        }
-    };
-}
-
 // ==================== DARK MODE ====================
 function initDarkMode() {
     const darkModeBtn = document.getElementById('dark-mode-toggle');
@@ -351,7 +102,7 @@ function displayRepositories(repos) {
             <p>${repo.description || 'No description available'}</p>
             <p><strong>⭐ Stars:</strong> ${repo.stargazers_count}</p>
             <div class="project-links">
-                <a href="${repo.html_url}" target="_blank">${t('viewOnGithub')}</a>
+                <a href="${repo.html_url}" target="_blank">View on GitHub →</a>
             </div>
         `;
         container.appendChild(card);
@@ -399,12 +150,12 @@ function setupContactForm() {
         formData.append('email', email);
         formData.append('message', message);
         
-        statusMsg.textContent = t('contactForm.sending');
+        statusMsg.textContent = '⏳ Sending...';
         statusMsg.style.color = '#ffd700';
         
         fetch(scriptURL, {method: 'POST', body: formData})
             .then(response => {
-                statusMsg.textContent = t('contactForm.success');
+                statusMsg.textContent = '✅ Message received! Thank you!';
                 statusMsg.style.color = '#90EE90';
                 contactForm.reset();
                 
@@ -413,7 +164,7 @@ function setupContactForm() {
                 }, 3000);
             })
             .catch(error => {
-                statusMsg.textContent = t('contactForm.success');
+                statusMsg.textContent = '✅ Message received! Thank you!';
                 statusMsg.style.color = '#90EE90';
                 contactForm.reset();
             });
@@ -423,10 +174,9 @@ function setupContactForm() {
 // ==================== INITIALIZE ALL ====================
 document.addEventListener('DOMContentLoaded', function() {
     initDarkMode();
-    setupLanguageDropdown();
-    updatePageLanguage();
     initTypingEffect();
     fetchRepositories();
     fetchGitHubStats();
     setupContactForm();
 });
+
