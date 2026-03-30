@@ -68,16 +68,20 @@ header::before {
     width: 90px;
     height: 90px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2em;
-    font-weight: bold;
-    color: white;
     border: 3px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
     animation: float 3s ease-in-out infinite;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 @keyframes float {
@@ -694,4 +698,32 @@ body.dark-mode .form-group textarea:focus {
         font-size: 1.5em;
     }
 
-    
+    .avatar {
+        width: 70px;
+        height: 70px;
+    }
+
+    .dark-mode-btn {
+        padding: 8px 15px;
+        font-size: 0.9em;
+    }
+
+    .project-card {
+        padding: 15px;
+    }
+
+    .stat-card p {
+        font-size: 2em;
+    }
+
+    .header-btns {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        text-align: center;
+    }
+}
