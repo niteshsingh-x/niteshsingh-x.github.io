@@ -175,8 +175,28 @@ function setupContactForm() {
 document.addEventListener('DOMContentLoaded', function() {
     initDarkMode();
     initTypingEffect();
+    fetchGitHubAvatar();
     fetchRepositories();
     fetchGitHubStats();
     setupContactForm();
 });
 
+// ==================== FETCH GITHUB AVATAR ====================
+async function fetchGitHubAvatar() {
+    const username = 'niteshsingh-x';
+    
+    try {
+        const response = await fetch(`https://api.github.com/users/${username}`);
+        const userData = await response.json();
+        
+        const avatarImg = document.getElementById('avatar-img');
+        if (avatarImg) {
+            avatarImg.src = userData.avatar_url;
+            avatarImg.alt = `${username}'s GitHub Avatar`;
+        }
+        
+        console.log('Avatar loaded:', userData.avatar_url);
+    } catch (error) {
+        console.error('Error fetching avatar:', error);
+    }
+}
