@@ -16,6 +16,23 @@ function initDarkMode() {
     });
 }
 
+// ==================== FETCH GITHUB AVATAR ====================
+async function fetchGitHubAvatar() {
+    const username = 'niteshsingh-x';
+    
+    try {
+        const response = await fetch(`https://api.github.com/users/${username}`);
+        const userData = await response.json();
+        
+        const avatarImg = document.getElementById('avatar-img');
+        if (avatarImg && userData.avatar_url) {
+            avatarImg.src = userData.avatar_url;
+        }
+    } catch (error) {
+        console.error('Error fetching avatar:', error);
+    }
+}
+
 // ==================== TYPING ANIMATION ====================
 function initTypingEffect() {
     const texts = [
@@ -180,21 +197,3 @@ document.addEventListener('DOMContentLoaded', function() {
     fetchGitHubStats();
     setupContactForm();
 });
-
-// ==================== FETCH GITHUB AVATAR ====================
-
-async function fetchGitHubAvatar() {
-    const username = 'niteshsingh-x';
-    
-    try {
-        const response = await fetch(`https://api.github.com/users/${username}`);
-        const userData = await response.json();
-        
-        const avatarImg = document.getElementById('avatar-img');
-        if (avatarImg && userData.avatar_url) {
-            avatarImg.src = userData.avatar_url;
-        }
-    } catch (error) {
-        console.error('Error fetching avatar:', error);
-    }
-}
