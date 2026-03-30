@@ -27,9 +27,23 @@ async function fetchGitHubAvatar() {
         const avatarImg = document.getElementById('avatar-img');
         if (avatarImg && userData.avatar_url) {
             avatarImg.src = userData.avatar_url;
+            avatarImg.alt = `${username}'s GitHub Avatar`;
+            avatarImg.onload = function() {
+                console.log('Avatar loaded successfully');
+            };
+            avatarImg.onerror = function() {
+                console.log('Avatar failed to load, using fallback');
+                this.src = 'https://via.placeholder.com/90?text=NS';
+                this.alt = 'GitHub Avatar';
+            };
         }
     } catch (error) {
         console.error('Error fetching avatar:', error);
+        const avatarImg = document.getElementById('avatar-img');
+        if (avatarImg) {
+            avatarImg.src = 'https://via.placeholder.com/90?text=NS';
+            avatarImg.alt = 'GitHub Avatar';
+        }
     }
 }
 

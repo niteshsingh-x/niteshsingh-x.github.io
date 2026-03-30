@@ -64,6 +64,7 @@ header::before {
     z-index: 10;
 }
 
+/* ==================== AVATAR ==================== */
 .avatar {
     width: 90px;
     height: 90px;
@@ -75,6 +76,7 @@ header::before {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 #avatar-img {
@@ -82,6 +84,9 @@ header::before {
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 @keyframes float {
