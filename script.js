@@ -51,9 +51,8 @@ async function fetchGitHubAvatar() {
 function initTypingEffect() {
     const texts = [
         'Full Stack Developer 💻',
-        'GitHub Enthusiast 🐙',
-        'Problem Solver 🧠',
-        'Open Source Lover ❤️',
+        'Python Developer 💻',
+        'IT Support Specialist 🛠️',
         'UI/UX Designer 🎨'
     ];
     
